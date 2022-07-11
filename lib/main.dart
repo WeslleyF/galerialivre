@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'src/repository/repository_images.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Galeria Livre',
       theme: ThemeData(
        
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Suas Fotos'),
     );
   }
 }
@@ -41,6 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     
+    // Cria instância do repositório
+    RepositoryImages repositorio = RepositoryImages();
+    repositorio.getDeviceImages();
+
     return Scaffold(
       appBar: AppBar(
         
