@@ -1,10 +1,11 @@
 import 'package:local_image_provider/local_image_provider.dart' as lip;
 
 class RepositoryImages{
+  
 
-  Future<List<String?>> getDeviceImages() async
+  Future<List<String>> getDeviceImages() async
   {
-    List<String?> listOfUrls = [];
+    List<String> listOfUrls = [];
 
     lip.LocalImageProvider imageProvider = lip.LocalImageProvider();
     bool hasPermission = await imageProvider.initialize();
@@ -13,9 +14,10 @@ class RepositoryImages{
       List<lip.LocalImage> images = await imageProvider.findLatest(100);
       if (images.isNotEmpty) 
       {
-        images.forEach((img) { 
-          listOfUrls.add(img.fileName);
-        });
+        for (lip.LocalImage img in images) 
+        {
+          listOfUrls.add(img.fileName.toString());
+        }
            
       }
       else 
@@ -29,6 +31,7 @@ class RepositoryImages{
     } 
 
     return listOfUrls;
+
   }
  
 }

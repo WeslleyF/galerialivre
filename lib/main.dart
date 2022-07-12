@@ -32,6 +32,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  List<String> _imageURL = [];
+  
+  void carregarImagens() async
+  {
+    // Cria instância do repositório
+    RepositoryImages repositorio = RepositoryImages();
+
+    _imageURL = await repositorio.getDeviceImages();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -42,9 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     
-    // Cria instância do repositório
-    RepositoryImages repositorio = RepositoryImages();
-    repositorio.getDeviceImages();
+    carregarImagens();
 
     return Scaffold(
       appBar: AppBar(
