@@ -33,12 +33,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   List<String> _imageURL = [];
+  // Cria instância do repositório
+  late RepositoryImages repositorio;
   
   void carregarImagens() async
   {
-    // Cria instância do repositório
-    RepositoryImages repositorio = RepositoryImages();
-
     _imageURL = await repositorio.getDeviceImages();
   }
 
@@ -51,7 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     
+    repositorio = RepositoryImages();
     carregarImagens();
+    repositorio.GetImage(0);
 
     return Scaffold(
       appBar: AppBar(
