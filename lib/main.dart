@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_image_provider/device_image.dart';
 import 'src/repository/repository_images.dart';
 
 void main() {
@@ -32,52 +33,49 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  List<String> _imageURL = [];
-  // Cria instância do repositório
-  late RepositoryImages repositorio;
-  
-  void carregarImagens() async
-  {
-    _imageURL = await repositorio.getDeviceImages();
-  }
+
+  RepositoryImages repositorio = RepositoryImages();
+  late DeviceImage _image;
+  List<DeviceImage> _images = [];
+  late Image apresentar;
 
   void _incrementCounter() {
+    carregarImagens();
+  }
+
+  void carregarImagens() async
+  {
+    List<DeviceImage> result = await repositorio.loadDeviceImages();
+
     setState(() {
-      _counter++;
+      _images =  result;
+      _counter++; 
     });
   }
 
   @override
   Widget build(BuildContext context) {
     
-    repositorio = RepositoryImages();
-    carregarImagens();
-    repositorio.GetImage(0);
+    _images.length;
+    if (_images.length > 0)
+    { 
+      _image = _images[_counter];
+      apresentar = Image(image: _image);
+    }
+    else 
+    {
+      apresentar = Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg');
+    }
 
     return Scaffold(
       appBar: AppBar(
         
         title: Text(widget.title),
       ),
-      body: Center(
-       
-        child: Column(
-         
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+      body: apresentar,
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: 'Iniciar',
         child: const Icon(Icons.add),
       ), 
     );
